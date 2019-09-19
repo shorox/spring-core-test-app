@@ -8,6 +8,7 @@
 
     <context:annotation-config />
 
+    <bean class="quoters.DeprecationHandlerBeanFactoryPostProcessor" />
     <bean class="quoters.PostProxyInvokerContextListener" />
     <bean class="quoters.ProfilingHanglerBeanPostProcessor" />
     <bean class="quoters.InjectRandomIntAnnotationBeanPostProcessor" />
