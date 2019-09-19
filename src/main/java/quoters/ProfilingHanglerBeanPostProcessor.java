@@ -6,8 +6,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +32,10 @@ public class ProfilingHanglerBeanPostProcessor implements BeanPostProcessor {
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
     Class<?> beanClass = map.get(beanName);
     if (beanClass != null) {
-      return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new InvocationHandler() {
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+      return Proxy.newProxyInstance(
+        beanClass.getClassLoader(),
+        beanClass.getInterfaces(),
+        (proxy, method, args) -> {
           if (controller.isEnabled()) {
             System.out.println("Profiling...");
             long before = System.nanoTime();
@@ -49,7 +48,7 @@ public class ProfilingHanglerBeanPostProcessor implements BeanPostProcessor {
 
           return method.invoke(bean, args);
         }
-      });
+      );
     }
 
     return bean;

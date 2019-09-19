@@ -8,8 +8,8 @@
 
     <context:annotation-config />
 
+    <bean class="quoters.PostProxyInvokerContextListener" />
     <bean class="quoters.ProfilingHanglerBeanPostProcessor" />
-
     <bean class="quoters.InjectRandomIntAnnotationBeanPostProcessor" />
 
     <bean id="terminatorQuoter" class="quoters.TerminatorQuoter">
