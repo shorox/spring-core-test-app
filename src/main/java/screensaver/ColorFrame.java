@@ -1,5 +1,6 @@
 package screensaver;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -22,5 +23,6 @@ public abstract class ColorFrame extends JFrame {
     repaint();
   }
 
+  @Lookup
   protected abstract Color getColor();
 }
